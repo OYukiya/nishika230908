@@ -1,0 +1,52 @@
+[tool.poetry]
+name = "nishika"
+version = "0.1.0"
+description = ""
+authors = ["OYukiya <oyrzs021@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pandas = "^2.0.3"
+numpy = "^1.25.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.dev-dependencies]
+pysen = "0.10.2"
+black = "22.6.0"
+flake8 = "4.0.1"
+isort = "5.10.1"
+mypy = "0.961"
+
+[tool.pysen]
+version = "0.10.2"
+
+[tool.pysen.lint]
+enable_black = true
+enable_flake8 = true
+enable_isort = true
+enable_mypy = false
+mypy_preset = "entry"
+line_length = 120
+py_version = "py39"
+isort_known_third_party = ["numpy"]
+isort_known_first_party = ["pysen", "nishika230908"]  # need to add package name for correct import ordering
+mypy_ignore_packages = ["pysen.generated.*"]
+mypy_path = ["stubs"]
+[[tool.pysen.lint.mypy_targets]]
+paths = ["nishika"]
+
+[tool.pysen.lint.source]
+includes = ["."]
+include_globs = ["**/*.template"]
+excludes = ["third_party/"]
+exclude_globs = ["**/*_grpc.py", "**/migrations/", "**/__init__.py"]
+
+[tool.pysen.lint.mypy_modules."pysen.scripts"]
+preset = "entry"
+
+[tool.pysen.lint.mypy_modules."numpy"]
+ignore_errors = true
